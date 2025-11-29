@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+
 jobs:
 
   build:
@@ -14,5 +17,61 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+    - name: Build Backend Docker image
+      run: docker build ./operator-996-os/backend --tag operator996-backend:test
+
+    - name: Build Frontend Docker image
+      run: docker build ./operator-996-os/frontend --tag operator996-frontend:test
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install backend dependencies
+      run: |
+        cd operator-996-os/backend
+        pip install -r requirements.txt
+
+    - name: Test backend API endpoints
+      run: |
+        cd operator-996-os/backend
+        uvicorn backend_main:app --host 0.0.0.0 --port 8000 &
+        SERVER_PID=$!
+        
+        # Wait for server to start
+        for i in {1..30}; do
+          if curl -s http://localhost:8000/health > /dev/null 2>&1; then
+            echo "Server is ready!"
+            break
+          fi
+          echo "Waiting for server to start... ($i/30)"
+          sleep 1
+        done
+        
+        # Run health check
+        echo "Testing /health endpoint..."
+        curl -f http://localhost:8000/health || { kill $SERVER_PID 2>/dev/null; exit 1; }
+        echo "Health check passed!"
+        
+        # Run profile endpoint check
+        echo "Testing /profile endpoint..."
+        curl -f http://localhost:8000/profile || { kill $SERVER_PID 2>/dev/null; exit 1; }
+        echo "Profile endpoint check passed!"
+        
+        # Run events endpoint check
+        echo "Testing /events endpoint..."
+        curl -f http://localhost:8000/events || { kill $SERVER_PID 2>/dev/null; exit 1; }
+        echo "Events endpoint check passed!"
+        
+        # Cleanup
+        kill $SERVER_PID 2>/dev/null || true
+        echo "All API tests passed!"
