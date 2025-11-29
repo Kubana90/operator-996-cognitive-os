@@ -14,7 +14,6 @@ from datetime import datetime
 import asyncio
 import logging
 import os
-import uuid as uuid_module
 
 # ML & Analysis
 from sklearn.decomposition import PCA
@@ -287,7 +286,7 @@ class CognitiveOS:
             return False
     
     def add_behavioral_event(self, event: BehavioralEvent) -> str:
-        """Log a behavioral event with timestamp"""
+        """Log a behavioral event with timestamp and persist to database if available"""
         event_id = hashlib.md5(
             f"{event.timestamp}{event.description}".encode()
         ).hexdigest()[:12]
@@ -295,6 +294,33 @@ class CognitiveOS:
         event_dict = event.dict()
         event_dict['id'] = event_id
         self.behavioral_events.append(event_dict)
+        
+        # Persist to database if available
+        if self.db_session and self.profile_id:
+            try:
+                # Parse timestamp
+                timestamp = event.timestamp
+                if isinstance(timestamp, str):
+                    try:
+                        timestamp = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+                    except ValueError:
+                        timestamp = datetime.utcnow()
+                
+                db_event = BehavioralEventDB(
+                    profile_id=self.profile_id,
+                    event_type=event.event_type,
+                    description=event.description,
+                    timestamp=timestamp,
+                    decision_logic=event.decision_logic,
+                    outcome=event.outcome,
+                    tags=event.tags or [],
+                )
+                self.db_session.add(db_event)
+                self.db_session.commit()
+                logger.info(f"Event persisted to database: {event_id}")
+            except Exception as e:
+                self.db_session.rollback()
+                logger.warning(f"Failed to persist event to database: {e}")
         
         logger.info(f"Event logged: {event_id} - {event.event_type}")
         return event_id
