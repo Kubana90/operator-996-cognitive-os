@@ -409,9 +409,9 @@ class TestErrorHandling:
     @pytest.mark.anyio
     async def test_add_event_missing_required_fields(self, client):
         """Test POST /event/add with missing required fields"""
+        # Missing description and timestamp
         invalid_event = {
             "event_type": "decision"
-            # Missing description and timestamp
         }
         response = await client.post("/event/add", json=invalid_event)
         assert response.status_code == 422  # Validation error
