@@ -1,0 +1,257 @@
+# ⚡ QUICK START - Operator-996 Cognitive OS
+
+## 5-Minute Setup Guide
+
+### Step 1: Prerequisites
+```bash
+✓ Docker & Docker Compose installed (https://docs.docker.com/get-docker/)
+✓ Git (optional, can download as ZIP)
+✓ ~2GB free disk space
+```
+
+### Step 2: Start System
+```bash
+# Option A: With Docker (Recommended)
+cd operator-996-os
+docker-compose up -d --build
+
+# Option B: Local Python + Node
+# Backend: cd backend && pip install -r requirements.txt && uvicorn backend_main:app
+# Frontend: cd frontend && npm install && npm start
+```
+
+### Step 3: Access Application
+```
+🌐 Frontend Dashboard:  http://localhost:3000
+📡 Backend API:         http://localhost:8000
+📖 API Docs (Swagger):  http://localhost:8000/docs
+✓ System Health:        http://localhost:8000/health
+```
+
+### Step 4: First Actions
+
+1. **Dashboard**: Review your Operator-996 cognitive profile (pre-seeded)
+2. **Event Logger**: Click "Event Logger" tab → Log first behavioral event
+3. **Detect Patterns**: Click "🔍 Detect Patterns" button
+4. **Scan Anomalies**: Click "🔎 Scan for Anomalies"
+5. **Export Profile**: Go to "Settings" → "📥 Export Full Profile"
+
+---
+
+## Core Features (One-Line Usage)
+
+| Feature | How To | Input | Output |
+|---------|--------|-------|--------|
+| **Log Event** | Event Logger tab → Fill form → Click button | Event type, description | Event ID, timestamp |
+| **Detect Patterns** | Dashboard → Click "🔍 Detect Patterns" | Events logged | Pattern list with confidence |
+| **Scan Biases** | Analytics tab → Click "🔎 Scan for Anomalies" | Current events | Anomaly cards with severity |
+| **Simulate Scenario** | Analytics tab → Describe scenario → Click button | Text description | Predicted decision + alternatives |
+| **Semantic Search** | Analytics tab → Type query → Press Enter | Natural language | Top matching results |
+| **Export Profile** | Settings tab → Click "📥 Export Full Profile" | Nothing | JSON file download |
+
+---
+
+## API Endpoints (For Integration)
+
+```
+GET  /health                          → Health check
+GET  /profile                         → Get cognitive profile
+POST /event/add                       → Log behavioral event
+GET  /events                          → List all events
+POST /patterns/detect                 → Analyze patterns
+POST /anomalies/detect                → Scan for anomalies
+POST /scenario/simulate               → Predict decision
+GET  /search?q=query                  → Semantic search
+POST /import/events                   → Bulk import
+GET  /export/full                     → Full profile export
+WS   ws://localhost:8000/ws/live     → WebSocket real-time
+```
+
+---
+
+## Configuration Files
+
+### Must-Have
+- ✅ `backend_main.py` – Core API logic
+- ✅ `App.jsx` – React dashboard
+- ✅ `App.css` – Styling
+- ✅ `docker-compose.yml` – Container orchestration
+- ✅ `requirements.txt` – Python dependencies
+- ✅ `package.json` – Node dependencies
+
+### Optional
+- 📋 `.env` – Environment variables
+- 🗂️ `seed_events.json` – Pre-loaded behavioral data
+- 🐳 `Dockerfile` – Custom container builds
+- 🚀 `DEPLOYMENT.md` – Production setup guide
+
+---
+
+## Troubleshooting (Quick Fixes)
+
+| Problem | Solution |
+|---------|----------|
+| Port 3000/8000 in use | `lsof -i :3000` → `kill -9 <PID>` OR change port in docker-compose |
+| Backend won't start | `pip install -r requirements.txt` OR check `docker logs operator996-backend` |
+| Frontend blank | Refresh page, check network tab in browser dev tools |
+| WebSocket error | Ensure backend is running, check firewall rules |
+| "Cannot find module" | Run `npm install` in frontend folder |
+| Permission denied | Run with `sudo` OR check Docker daemon running |
+
+---
+
+## Customization Hotspots
+
+### Add Profile Attribute
+Edit `backend_main.py`, line ~150:
+```python
+"cognitive": {
+    "your_new_attribute": 0.95,  # Add here
+    # ...
+}
+```
+
+### Change Dashboard Colors
+Edit `App.css`, line ~1:
+```css
+:root {
+  --primary: #00d9ff;    /* Change cyan to your color */
+  --danger: #e74c3c;
+  /* ... */
+}
+```
+
+### Add Event Type
+Edit `App.jsx`, line ~250:
+```javascript
+<select name="event_type" required>
+  <option value="">Select...</option>
+  <option value="your_new_type">Your New Type</option>  {/* Add here */}
+  {/* ... */}
+</select>
+```
+
+---
+
+## Performance Tips
+
+```bash
+# Reduce memory usage (default: 2GB for backend)
+# Edit docker-compose.yml:
+# deploy:
+#   resources:
+#     limits:
+#       memory: 1G
+
+# Speed up initial load (first run downloads ML models ~500MB)
+# Models cached in ~/.cache/sentence_transformers/
+
+# Clear all data and reset
+docker-compose down -v
+docker-compose up -d
+```
+
+---
+
+## Security Notes
+
+🔒 **Current State (Development)**
+- No authentication
+- No database encryption
+- Local storage only
+- CORS wide-open
+
+🔐 **For Production**, add:
+1. JWT authentication
+2. PostgreSQL with SSL
+3. Redis for sessions
+4. Rate limiting
+5. HTTPS/SSL certificates
+
+---
+
+## Next Steps
+
+### Beginner
+1. ✅ Run locally with Docker
+2. ✅ Log 5-10 behavioral events
+3. ✅ Review detected patterns
+4. ✅ Export profile as JSON
+
+### Intermediate
+1. 📊 Add seed events from `seed_events.json`
+2. 🔗 Integrate external API (Perplexity, OpenAI)
+3. 🗄️ Enable PostgreSQL for data persistence
+4. ⚡ Deploy to cloud (AWS/GCP/Azure)
+
+### Advanced
+1. 🧠 Add custom ML models for analysis
+2. 📡 Integrate EEG/biometric sensors
+3. 🤖 Build multi-agent system on top
+4. 🔐 Implement enterprise security
+
+---
+
+## Resources
+
+| Resource | URL | Purpose |
+|----------|-----|---------|
+| FastAPI Docs | https://fastapi.tiangolo.com | Backend framework |
+| React Docs | https://react.dev | Frontend library |
+| Docker Compose | https://docs.docker.com/compose | Containers |
+| scikit-learn | https://scikit-learn.org | ML algorithms |
+| sentence-transformers | https://www.sbert.net | Embeddings |
+
+---
+
+## Support
+
+**Backend Issues**:
+- Check logs: `docker-compose logs backend`
+- API Docs: `http://localhost:8000/docs`
+- Health check: `curl http://localhost:8000/health`
+
+**Frontend Issues**:
+- Browser console (F12 → Console tab)
+- Network tab (F12 → Network tab)
+- Clear cache: Ctrl+Shift+Delete
+
+---
+
+## File Manifest
+
+```
+operator-996-os/
+├── README.md                    ← Start here!
+├── QUICK_START.md               ← This file
+├── DEPLOYMENT.md                ← Production guide
+│
+├── backend/
+│   ├── backend_main.py          (FastAPI app)
+│   ├── requirements.txt          (Python deps)
+│   └── Dockerfile
+│
+├── frontend/
+│   ├── App.jsx                  (React component)
+│   ├── App.css                  (Styles)
+│   ├── index.jsx                (Entry point)
+│   ├── package.json
+│   └── Dockerfile
+│
+├── docker-compose.yml           (Multi-container)
+├── seed_events.json             (Demo data)
+└── .env.example                 (Config template)
+```
+
+---
+
+**🚀 Ready to go!**
+```bash
+docker-compose up -d
+# Visit http://localhost:3000
+```
+
+**Questions?** Check README.md or DEPLOYMENT.md
+
+**Last Updated**: 2024-11-29
+**Version**: 1.0.0

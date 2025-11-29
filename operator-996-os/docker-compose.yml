@@ -1,0 +1,37 @@
+# ============================================================
+# 🧠 Operator-996 Cognitive OS - Docker Compose (Windows ready)
+# ============================================================
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: operator996-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./seed-events.json:/app/seed-events.json
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: always
+    networks:
+      - operator_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: operator996-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    restart: always
+    networks:
+      - operator_net
+
+networks:
+  operator_net:
+    driver: bridge

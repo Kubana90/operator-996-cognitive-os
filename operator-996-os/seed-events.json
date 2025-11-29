@@ -1,0 +1,95 @@
+[
+  {
+    "event_type": "decision",
+    "description": "Evaluated competing AI model architectures for RAG system integration. Chose complex transformer-based approach over simpler retrieval.",
+    "timestamp": "2024-11-28T14:30:00Z",
+    "decision_logic": "maximize_capability minimize_risk systematic_analysis high_complexity_embrace",
+    "outcome": "completed",
+    "tags": ["ai_integration", "systems_thinking"]
+  },
+  {
+    "event_type": "project",
+    "description": "Initiated CEFIELD-Technology platform rebuild with monorepo architecture and multi-agent system.",
+    "timestamp": "2024-11-27T10:15:00Z",
+    "decision_logic": "innovation_first technical_debt_elimination scalability",
+    "outcome": "in_progress",
+    "tags": ["full_stack_development", "architecture"]
+  },
+  {
+    "event_type": "decision",
+    "description": "Chose to implement electromagnetic resonance mapping tool despite timeline pressure. Prioritized technical excellence over deadline.",
+    "timestamp": "2024-11-26T16:45:00Z",
+    "decision_logic": "quality_over_speed perfection_bias experimentation",
+    "outcome": "completed",
+    "tags": ["electromagnetic_research", "innovation"]
+  },
+  {
+    "event_type": "communication",
+    "description": "Direct feedback to collaborator on project scope: 'This is technically insufficient. We need to add X, Y, Z or it's incomplete.'",
+    "timestamp": "2024-11-25T09:20:00Z",
+    "decision_logic": "radical_honesty substance_preference directness",
+    "tags": ["directness", "substance"]
+  },
+  {
+    "event_type": "project",
+    "description": "Developed proprietary trading analytics pipeline with real-time data ingestion from TwelveData API.",
+    "timestamp": "2024-11-24T13:10:00Z",
+    "decision_logic": "high_complexity high_stakes data_driven",
+    "outcome": "completed",
+    "tags": ["trading_analytics", "full_stack_development"]
+  },
+  {
+    "event_type": "decision",
+    "description": "Analyzed market valuation strategies for SaaS product. Decided to pursue premium positioning + enterprise sales rather than mass market.",
+    "timestamp": "2024-11-23T11:00:00Z",
+    "decision_logic": "strategic_positioning risk_aware business_optimization",
+    "outcome": "planning",
+    "tags": ["business_strategy", "innovation"]
+  },
+  {
+    "event_type": "interaction",
+    "description": "Engaged in technical debate regarding API design patterns. Advocated for more sophisticated approach despite higher initial complexity.",
+    "timestamp": "2024-11-22T15:30:00Z",
+    "decision_logic": "systems_thinking long_term_thinking complexity_comfort",
+    "tags": ["technical_leadership", "depth"]
+  },
+  {
+    "event_type": "project",
+    "description": "Created 3D CAD conversion tool with Meshy API integration for automated model processing.",
+    "timestamp": "2024-11-21T10:45:00Z",
+    "decision_logic": "automation multimodal_capability technical_leverage",
+    "outcome": "completed",
+    "tags": ["3d_modeling", "full_stack_development"]
+  },
+  {
+    "event_type": "decision",
+    "description": "Evaluated three psychological assessment frameworks. Selected HEXACO over Big Five for more nuanced personality mapping.",
+    "timestamp": "2024-11-20T14:20:00Z",
+    "decision_logic": "nuance_seeking depth_first precision_bias",
+    "outcome": "completed",
+    "tags": ["psychological_analysis", "systems_thinking"]
+  },
+  {
+    "event_type": "communication",
+    "description": "Questioned fundamental assumptions in team strategy meeting. Proposed alternative framework based on novel insight.",
+    "timestamp": "2024-11-19T09:00:00Z",
+    "decision_logic": "pattern_recognition meta_level_thinking provocation_tolerance",
+    "tags": ["strategic_depth", "innovation"]
+  },
+  {
+    "event_type": "project",
+    "description": "Implemented self-hosted Ollama instance for local LLM fine-tuning without cloud dependencies.",
+    "timestamp": "2024-11-18T16:15:00Z",
+    "decision_logic": "control_optimization independence technical_sophistication",
+    "outcome": "completed",
+    "tags": ["ai_integration", "full_stack_development"]
+  },
+  {
+    "event_type": "decision",
+    "description": "Abandoned initial prototype approach after 3 days of development. Recognized fundamental architecture flaw before sunk cost deepened.",
+    "timestamp": "2024-11-17T12:30:00Z",
+    "decision_logic": "rapid_iteration bias_recognition pragmatism",
+    "outcome": "abandoned",
+    "tags": ["learning_velocity", "optimization"]
+  }
+]

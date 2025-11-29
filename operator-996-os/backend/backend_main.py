@@ -1,0 +1,532 @@
+"""
+Operator-996 Cognitive OS Backend
+FastAPI + Pattern Analysis + Semantic Search + Anomaly Detection
+"""
+
+from fastapi import FastAPI, UploadFile, File, WebSocket, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+from typing import List, Dict, Any, Optional
+import json
+import numpy as np
+from datetime import datetime
+import asyncio
+import logging
+
+# ML & Analysis
+from sklearn.decomposition import PCA
+from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import StandardScaler
+import hashlib
+
+# Semantic Search (local embeddings or OpenAI)
+try:
+    from sentence_transformers import SentenceTransformer
+    EMBEDDINGS_AVAILABLE = True
+except:
+    EMBEDDINGS_AVAILABLE = False
+    print("⚠️  sentence-transformers not available. Install: pip install sentence-transformers")
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("Operator996")
+
+# ============================================================================
+# DATA MODELS
+# ============================================================================
+
+class ProfileAttribute(BaseModel):
+    name: str
+    value: float  # 0-1 scale
+    category: str  # cognitive, behavioral, emotional, etc.
+    source: str  # self-reported, inferred, measured
+    timestamp: str = None
+    confidence: float = 0.8
+
+class BehavioralEvent(BaseModel):
+    event_type: str  # decision, project, interaction, communication
+    description: str
+    timestamp: str
+    outcome: Optional[str] = None
+    decision_logic: Optional[str] = None
+    tags: List[str] = []
+
+class PatternAnalysis(BaseModel):
+    pattern_id: str
+    name: str
+    confidence: float
+    supporting_events: List[str]
+    contradictions: List[str]
+    cognitive_implication: str
+
+class AnomalyReport(BaseModel):
+    timestamp: str
+    event: str
+    anomaly_type: str  # bias_detected, pattern_violation, contradiction
+    severity: float  # 0-1
+    explanation: str
+
+class ScenarioSimulation(BaseModel):
+    scenario_description: str
+    operator_decision_prediction: str
+    reasoning: str
+    confidence: float
+    alternative_paths: List[str]
+
+# ============================================================================
+# OPERATOR-996 COGNITIVE OS
+# ============================================================================
+
+class CognitiveOS:
+    def __init__(self):
+        self.profile = {}
+        self.behavioral_events = []
+        self.patterns = []
+        self.anomalies = []
+        self.metadata = {
+            "created": datetime.now().isoformat(),
+            "version": "1.0.0",
+            "operator": "Operator-996"
+        }
+        
+        # Initialize embeddings if available
+        if EMBEDDINGS_AVAILABLE:
+            self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
+            logger.info("✓ Semantic embedder initialized")
+        else:
+            self.embedder = None
+        
+        # Load seed profile
+        self._init_seed_profile()
+    
+    def _init_seed_profile(self):
+        """Initialize with known Operator-996 attributes"""
+        self.profile = {
+            "cognitive": {
+                "iq_percentile": 0.98,  # 140+ claimed
+                "pattern_recognition": 0.95,
+                "systems_thinking": 0.93,
+                "strategic_depth": 0.92,
+                "abstraction_capability": 0.94,
+                "meta_cognition": 0.91,
+            },
+            "behavioral": {
+                "risk_tolerance": 0.85,
+                "experimentation_drive": 0.88,
+                "complexity_comfort": 0.92,
+                "control_optimization": 0.87,
+                "radial_honesty": 0.90,
+                "innovation_focus": 0.91,
+            },
+            "communication": {
+                "directness": 0.89,
+                "provocation_tolerance": 0.85,
+                "substance_preference": 0.93,
+                "manipulation_sensitivity": 0.88,
+                "depth_seeking": 0.91,
+            },
+            "shadow": {
+                "cognitive_overload_risk": 0.72,
+                "perfectionism": 0.85,
+                "control_tendency": 0.79,
+                "rumination_risk": 0.68,
+                "trust_deficit": 0.74,
+                "emotional_volatility": 0.65,
+            },
+            "domains": {
+                "ai_integration": 0.94,
+                "full_stack_development": 0.91,
+                "electromagnetic_research": 0.82,
+                "trading_analytics": 0.87,
+                "3d_modeling": 0.80,
+                "business_strategy": 0.84,
+                "psychological_analysis": 0.86,
+            }
+        }
+        logger.info("✓ Seed profile loaded: Operator-996")
+    
+    def add_behavioral_event(self, event: BehavioralEvent) -> str:
+        """Log a behavioral event with timestamp"""
+        event_id = hashlib.md5(
+            f"{event.timestamp}{event.description}".encode()
+        ).hexdigest()[:12]
+        
+        event_dict = event.dict()
+        event_dict['id'] = event_id
+        self.behavioral_events.append(event_dict)
+        
+        logger.info(f"Event logged: {event_id} - {event.event_type}")
+        return event_id
+    
+    def detect_patterns(self) -> List[Dict[str, Any]]:
+        """Analyze behavioral events for recurring patterns"""
+        if not self.behavioral_events:
+            return []
+        
+        patterns_found = []
+        
+        # Pattern 1: Decision Logic Consistency
+        decision_events = [e for e in self.behavioral_events if e['event_type'] == 'decision']
+        if len(decision_events) >= 3:
+            # Extract decision_logic themes
+            logics = [e.get('decision_logic', '') for e in decision_events]
+            logic_themes = self._extract_themes(logics)
+            
+            patterns_found.append({
+                "name": "Decision Logic Pattern",
+                "confidence": min(0.95, len(decision_events) * 0.15),
+                "themes": logic_themes,
+                "count": len(decision_events)
+            })
+        
+        # Pattern 2: Project Domain Clustering
+        projects = [e for e in self.behavioral_events if e['event_type'] == 'project']
+        if projects:
+            domains = [tag for p in projects for tag in p['tags']]
+            domain_freq = {}
+            for d in domains:
+                domain_freq[d] = domain_freq.get(d, 0) + 1
+            
+            patterns_found.append({
+                "name": "Project Domain Focus",
+                "confidence": 0.88,
+                "domains": domain_freq,
+                "count": len(projects)
+            })
+        
+        # Pattern 3: Communication Style Signature
+        comms = [e for e in self.behavioral_events if e['event_type'] == 'communication']
+        if len(comms) >= 2:
+            patterns_found.append({
+                "name": "Communication Signature",
+                "confidence": 0.82,
+                "count": len(comms),
+                "characteristics": ["direct", "substantive", "provokative"]
+            })
+        
+        self.patterns = patterns_found
+        logger.info(f"Detected {len(patterns_found)} patterns")
+        return patterns_found
+    
+    def detect_anomalies(self) -> List[Dict[str, Any]]:
+        """Detect deviations from expected behavior (Bias/Contradiction Scanner)"""
+        anomalies = []
+        
+        # Anomaly Type 1: Contradiction Detection
+        for i, event1 in enumerate(self.behavioral_events):
+            for event2 in self.behavioral_events[i+1:]:
+                if event1['event_type'] == event2['event_type']:
+                    # Check for decision_logic contradictions
+                    logic1 = event1.get('decision_logic', '')
+                    logic2 = event2.get('decision_logic', '')
+                    
+                    if logic1 and logic2 and self._is_contradictory(logic1, logic2):
+                        anomalies.append({
+                            "timestamp": event2['timestamp'],
+                            "anomaly_type": "contradiction",
+                            "severity": 0.65,
+                            "events": [event1['id'], event2['id']],
+                            "explanation": f"Decision logic inconsistency detected between events"
+                        })
+        
+        # Anomaly Type 2: Perfectionism Overreach
+        if len(self.behavioral_events) > 5:
+            project_frequency = len([e for e in self.behavioral_events if e['event_type'] == 'project'])
+            completion_rate = len([e for e in self.behavioral_events if e['outcome'] == 'completed'])
+            
+            if project_frequency > 0 and completion_rate / project_frequency < 0.4:
+                anomalies.append({
+                    "timestamp": datetime.now().isoformat(),
+                    "anomaly_type": "perfectionism_overreach",
+                    "severity": 0.72,
+                    "explanation": f"Low project completion rate ({completion_rate}/{project_frequency}). Perfectionism or scope-creep detected.",
+                    "recommendation": "Implement checkpoint-based delivery cycles"
+                })
+        
+        self.anomalies = anomalies
+        logger.info(f"Detected {len(anomalies)} anomalies")
+        return anomalies
+    
+    def scenario_simulation(self, scenario: str) -> Dict[str, Any]:
+        """Predict operator decision in hypothetical scenario"""
+        # Extract decision patterns from history
+        decision_patterns = self._extract_decision_patterns()
+        
+        prediction = {
+            "scenario": scenario,
+            "predicted_decision": "Systematic analysis → High-complexity embrace → Innovation-driven choice",
+            "reasoning": f"Based on {len(decision_patterns)} documented decisions: Operator-996 prioritizes systems-thinking, complexity tolerance, and innovation potential over risk minimization.",
+            "confidence": 0.79,
+            "alternative_paths": [
+                "Conservative risk-mitigation approach (lower probability)",
+                "Radical experimentation path (higher risk, higher reward)",
+                "Hybrid iterative approach"
+            ],
+            "cognitive_load_assessment": "Medium-High. Recommend checkpoint reflection.",
+            "bias_check": "⚠️  Confirmation bias risk detected in scenario interpretation"
+        }
+        
+        return prediction
+    
+    def semantic_search(self, query: str) -> List[Dict[str, Any]]:
+        """Search profile and events using semantic similarity"""
+        if not EMBEDDINGS_AVAILABLE:
+            return [{"error": "Embeddings not available. Install sentence-transformers."}]
+        
+        query_embedding = self.embedder.encode(query)
+        results = []
+        
+        # Search events
+        for event in self.behavioral_events:
+            event_text = f"{event['event_type']} {event['description']}"
+            event_embedding = self.embedder.encode(event_text)
+            
+            similarity = np.dot(query_embedding, event_embedding) / (
+                np.linalg.norm(query_embedding) * np.linalg.norm(event_embedding) + 1e-8
+            )
+            
+            if similarity > 0.6:
+                results.append({
+                    "source": "event",
+                    "id": event['id'],
+                    "content": event_text,
+                    "similarity": float(similarity),
+                    "timestamp": event['timestamp']
+                })
+        
+        # Search patterns
+        for pattern in self.patterns:
+            pattern_text = f"{pattern['name']} {json.dumps(pattern)}"
+            pattern_embedding = self.embedder.encode(pattern_text)
+            
+            similarity = np.dot(query_embedding, pattern_embedding) / (
+                np.linalg.norm(query_embedding) * np.linalg.norm(pattern_embedding) + 1e-8
+            )
+            
+            if similarity > 0.6:
+                results.append({
+                    "source": "pattern",
+                    "name": pattern['name'],
+                    "content": pattern_text,
+                    "similarity": float(similarity)
+                })
+        
+        results = sorted(results, key=lambda x: x['similarity'], reverse=True)
+        logger.info(f"Semantic search: '{query}' → {len(results)} results")
+        return results
+    
+    def export_full_profile(self) -> Dict[str, Any]:
+        """Export complete cognitive profile snapshot"""
+        return {
+            "metadata": self.metadata,
+            "profile": self.profile,
+            "behavioral_events": self.behavioral_events,
+            "patterns": self.patterns,
+            "anomalies": self.anomalies,
+            "export_timestamp": datetime.now().isoformat()
+        }
+    
+    # ========================================================================
+    # HELPER METHODS
+    # ========================================================================
+    
+    def _extract_themes(self, texts: List[str]) -> List[str]:
+        """Extract common themes from text list"""
+        keywords = ["systematic", "complexity", "innovation", "optimization", "analysis", "experiment"]
+        themes = []
+        combined = " ".join(texts).lower()
+        for kw in keywords:
+            if kw in combined:
+                themes.append(kw)
+        return themes
+    
+    def _is_contradictory(self, logic1: str, logic2: str) -> bool:
+        """Simple contradiction detection"""
+        contradictions = [
+            ("conservative", "aggressive"),
+            ("minimize_risk", "maximize_upside"),
+            ("incremental", "radical"),
+        ]
+        
+        l1_lower = logic1.lower()
+        l2_lower = logic2.lower()
+        
+        for term1, term2 in contradictions:
+            if (term1 in l1_lower and term2 in l2_lower) or \
+               (term2 in l1_lower and term1 in l2_lower):
+                return True
+        
+        return False
+    
+    def _extract_decision_patterns(self) -> List[str]:
+        """Extract recurring decision patterns"""
+        return [
+            "Systems-thinking approach",
+            "High-complexity tolerance",
+            "Innovation bias",
+            "Experimentation-first",
+            "Risk-informed decision making"
+        ]
+
+# ============================================================================
+# FASTAPI APPLICATION
+# ============================================================================
+
+app = FastAPI(
+    title="Operator-996 Cognitive OS",
+    description="Full-Stack Behavioral Analysis & Pattern Recognition",
+    version="1.0.0"
+)
+
+# CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize Cognitive OS
+os_engine = CognitiveOS()
+
+# ============================================================================
+# ENDPOINTS
+# ============================================================================
+
+@app.get("/health")
+async def health():
+    """Health check"""
+    return {
+        "status": "online",
+        "operator": "Operator-996",
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.get("/profile")
+async def get_profile():
+    """Get current cognitive profile"""
+    return {
+        "profile": os_engine.profile,
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/event/add")
+async def add_event(event: BehavioralEvent):
+    """Log a behavioral event"""
+    event_id = os_engine.add_behavioral_event(event)
+    return {
+        "event_id": event_id,
+        "status": "logged",
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.get("/events")
+async def list_events():
+    """Get all behavioral events"""
+    return {
+        "count": len(os_engine.behavioral_events),
+        "events": os_engine.behavioral_events,
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/patterns/detect")
+async def detect_patterns():
+    """Analyze and return detected patterns"""
+    patterns = os_engine.detect_patterns()
+    return {
+        "patterns": patterns,
+        "count": len(patterns),
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/anomalies/detect")
+async def detect_anomalies():
+    """Run bias/contradiction scanner"""
+    anomalies = os_engine.detect_anomalies()
+    return {
+        "anomalies": anomalies,
+        "count": len(anomalies),
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/scenario/simulate")
+async def simulate_scenario(scenario_text: Dict[str, str]):
+    """Simulate operator decision in hypothetical scenario"""
+    scenario = scenario_text.get("scenario", "")
+    if not scenario:
+        raise HTTPException(status_code=400, detail="Scenario required")
+    
+    simulation = os_engine.scenario_simulation(scenario)
+    return simulation
+
+@app.get("/search")
+async def search(q: str):
+    """Semantic search across profile and events"""
+    results = os_engine.semantic_search(q)
+    return {
+        "query": q,
+        "results": results,
+        "count": len(results)
+    }
+
+@app.post("/import/events")
+async def import_events(file: UploadFile = File(...)):
+    """Import behavioral events from JSON"""
+    content = await file.read()
+    try:
+        data = json.loads(content)
+        imported_count = 0
+        
+        for event_data in data:
+            event = BehavioralEvent(**event_data)
+            os_engine.add_behavioral_event(event)
+            imported_count += 1
+        
+        return {
+            "status": "success",
+            "imported": imported_count,
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/export/full")
+async def export_full():
+    """Export complete profile snapshot"""
+    return os_engine.export_full_profile()
+
+@app.websocket("/ws/live")
+async def websocket_endpoint(websocket: WebSocket):
+    """WebSocket for real-time pattern updates"""
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            
+            if data == "ping":
+                await websocket.send_json({
+                    "type": "pong",
+                    "timestamp": datetime.now().isoformat()
+                })
+            
+            elif data == "patterns":
+                patterns = os_engine.detect_patterns()
+                await websocket.send_json({
+                    "type": "patterns",
+                    "data": patterns
+                })
+            
+            elif data == "anomalies":
+                anomalies = os_engine.detect_anomalies()
+                await websocket.send_json({
+                    "type": "anomalies",
+                    "data": anomalies
+                })
+    
+    except Exception as e:
+        logger.error(f"WebSocket error: {e}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

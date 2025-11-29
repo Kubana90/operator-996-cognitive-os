@@ -1,0 +1,712 @@
+/* Operator-996 Cognitive OS - Main Styles */
+
+:root {
+  --primary: #00d9ff;
+  --secondary: #1a1a2e;
+  --accent: #16213e;
+  --danger: #e74c3c;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --text: #ecf0f1;
+  --text-dark: #2c3e50;
+  --bg: #0f3460;
+  --bg-light: #1a1a2e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--accent) 100%);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ========================================================================
+   LAYOUT
+   ======================================================================== */
+
+.operator-996-os {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background: var(--accent);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--primary);
+  box-shadow: 0 2px 10px rgba(0, 217, 255, 0.2);
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  letter-spacing: 2px;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-tab {
+  background: transparent;
+  color: var(--text);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-tab:hover {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.nav-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.footer {
+  background: var(--secondary);
+  padding: 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--primary);
+  font-size: 0.85rem;
+  color: rgba(236, 240, 241, 0.7);
+}
+
+/* ========================================================================
+   DASHBOARD
+   ======================================================================== */
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 1rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+.status-bar {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.status-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 217, 255, 0.1);
+  border-radius: 4px;
+  border-left: 3px solid var(--primary);
+}
+
+.status-item strong {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+/* ========================================================================
+   SECTIONS
+   ======================================================================== */
+
+section {
+  margin-bottom: 2rem;
+  background: rgba(26, 26, 46, 0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+section h2 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+}
+
+section h3 {
+  font-size: 1.2rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+/* ========================================================================
+   PROFILE SECTION
+   ======================================================================== */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-category {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+}
+
+.profile-category h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.attributes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.attribute-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 60px;
+  align-items: center;
+  gap: 1rem;
+}
+
+.attribute-label {
+  font-size: 0.85rem;
+  color: rgba(236, 240, 241, 0.8);
+  text-transform: capitalize;
+  text-align: right;
+}
+
+.attribute-bar {
+  height: 8px;
+  background: rgba(0, 217, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.attribute-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #00ffff);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+}
+
+.attribute-value {
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Domain Skills */
+.domain-grid {
+  margin-top: 2rem;
+}
+
+.skills-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-label {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.skill-meter {
+  height: 10px;
+  background: rgba(0, 217, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #00ff88);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 3px rgba(46, 204, 113, 0.5);
+}
+
+.skill-value {
+  font-size: 0.8rem;
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+/* ========================================================================
+   EVENTS SECTION
+   ======================================================================== */
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.event-card {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--primary);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.2);
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.event-type {
+  display: inline-block;
+  background: rgba(0, 217, 255, 0.2);
+  color: var(--primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.event-time {
+  font-size: 0.8rem;
+  color: rgba(236, 240, 241, 0.6);
+}
+
+.event-description {
+  color: rgba(236, 240, 241, 0.9);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.event-logic {
+  font-size: 0.85rem;
+  color: #2ecc71;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ========================================================================
+   PATTERNS SECTION
+   ======================================================================== */
+
+.patterns-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.pattern-card {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 217, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.pattern-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+}
+
+.pattern-card h3 {
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.pattern-card p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: rgba(236, 240, 241, 0.85);
+}
+
+.confidence-badge {
+  display: inline-block;
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* ========================================================================
+   ANOMALIES SECTION
+   ======================================================================== */
+
+.anomalies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.anomaly-card {
+  background: rgba(231, 76, 60, 0.1);
+  border-left: 4px solid var(--danger);
+  padding: 1.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.anomaly-card:hover {
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+}
+
+.anomaly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.anomaly-type {
+  display: inline-block;
+  background: rgba(231, 76, 60, 0.2);
+  color: var(--danger);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.severity-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+}
+
+.anomaly-card p {
+  color: rgba(236, 240, 241, 0.85);
+  font-size: 0.95rem;
+}
+
+.recommendation {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(46, 204, 113, 0.3);
+  color: #2ecc71;
+  font-size: 0.9rem;
+}
+
+/* ========================================================================
+   EVENT LOGGER
+   ======================================================================== */
+
+.event-logger {
+  background: rgba(26, 26, 46, 0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.event-logger h2 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* ========================================================================
+   ANALYTICS
+   ======================================================================== */
+
+.analytics {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.analytics h2 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+}
+
+.scenario-box,
+.search-box,
+.export-section {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.scenario-box h3,
+.search-box h3,
+.export-section h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.scenario-box textarea,
+.search-box input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 4px;
+  font-family: inherit;
+  margin-bottom: 1rem;
+}
+
+.scenario-box textarea:focus,
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+/* ========================================================================
+   SETTINGS
+   ======================================================================== */
+
+.settings {
+  background: rgba(26, 26, 46, 0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.settings h2 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.settings-group {
+  margin-bottom: 2rem;
+}
+
+.settings-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.settings-group input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.settings-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+.settings-group small {
+  display: block;
+  margin-top: 0.5rem;
+  color: rgba(236, 240, 241, 0.6);
+  font-size: 0.85rem;
+}
+
+.info-box {
+  background: rgba(0, 217, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+  margin-top: 2rem;
+}
+
+.info-box h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.info-box p {
+  color: rgba(236, 240, 241, 0.9);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.info-box strong {
+  color: var(--primary);
+}
+
+/* ========================================================================
+   BUTTONS
+   ======================================================================== */
+
+button {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #00ffff);
+  color: var(--text-dark);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.4);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: rgba(0, 217, 255, 0.2);
+  color: var(--primary);
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--primary);
+  font-size: 0.95rem;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(0, 217, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.2);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================================================
+   RESPONSIVE
+   ======================================================================== */
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  section {
+    padding: 1rem;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .attribute-row {
+    grid-template-columns: 80px 1fr 50px;
+    gap: 0.5rem;
+  }
+
+  .status-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+}
