@@ -3,11 +3,33 @@
 # ============================================================
 
 services:
+  db:
+    image: postgres:16-alpine
+    container_name: operator996-db
+    environment:
+      POSTGRES_USER: cognitive_os
+      POSTGRES_PASSWORD: cognitive_secure_pass
+      POSTGRES_DB: cognitive_os_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-EXEC", "pg_isready -U cognitive_os"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - operator_net
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: operator996-backend
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     volumes:
@@ -15,6 +37,7 @@ services:
       - ./seed-events.json:/app/seed-events.json
     environment:
       - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql://cognitive_os:cognitive_secure_pass@db:5432/cognitive_os_db
     restart: always
     networks:
       - operator_net
@@ -35,3 +58,6 @@ services:
 networks:
   operator_net:
     driver: bridge
+
+volumes:
+  postgres_data:
