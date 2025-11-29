@@ -1,0 +1,404 @@
+{
+  "behavioral_events": [
+    {
+      "event_type": "decision",
+      "description": "Chose to build custom neural network architecture instead of using pre-trained model for trading signals",
+      "timestamp": "2025-11-15T14:30:00Z",
+      "decision_logic": "Risk-reward analysis: Custom architecture offers 15% better precision on backtests, worth 3-week development time vs. immediate deployment with lower accuracy",
+      "outcome": "Achieved 87% signal accuracy, outperforming baseline by 12%",
+      "tags": ["ai", "trading", "risk-calculation", "technical-depth"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Rejected microservices architecture for MVP phase, opted for monolith-first approach",
+      "timestamp": "2025-11-12T10:15:00Z",
+      "decision_logic": "Systematic analysis: Premature microservices increase complexity by 300% for <100k users. Monolith allows faster iteration. Can decompose later with clear boundaries.",
+      "outcome": "Reduced deployment complexity, shipped MVP 2 weeks ahead of schedule",
+      "tags": ["architecture", "systems-thinking", "pragmatism", "optimization"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Selected PyTorch over TensorFlow for new ML pipeline despite team's TensorFlow experience",
+      "timestamp": "2025-11-08T16:45:00Z",
+      "decision_logic": "Long-term strategic analysis: PyTorch's dynamic graphs enable faster research iteration. Team can upskill in 2 weeks. Future-proofs research capabilities.",
+      "outcome": "Team adapted within 10 days, research velocity increased 40%",
+      "tags": ["ai", "ml", "strategic-thinking", "team-development"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Implemented custom backtesting framework instead of using QuantConnect",
+      "timestamp": "2025-11-01T09:00:00Z",
+      "decision_logic": "Control optimization: Custom framework allows proprietary alpha signals without third-party data exposure. Worth 4-week development investment.",
+      "outcome": "Full IP control, 3x faster backtests with custom optimizations",
+      "tags": ["trading", "control", "innovation", "security"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Chose to pivot product direction after 6 weeks of development based on early user feedback",
+      "timestamp": "2025-10-25T14:00:00Z",
+      "decision_logic": "Data-driven pivot: User interviews revealed 80% wanted feature B over feature A. Sunk cost fallacy awareness - cut losses early for higher expected value.",
+      "outcome": "Pivot successful, user retention improved by 65% post-launch",
+      "tags": ["business-strategy", "data-driven", "pragmatism", "user-focus"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Decided to open-source core algorithm library despite potential competitive disadvantage",
+      "timestamp": "2025-10-18T11:30:00Z",
+      "decision_logic": "Strategic positioning: Open-source builds credibility, attracts talent, creates ecosystem. Competitive moat is execution speed and proprietary data, not algorithms.",
+      "outcome": "2,500 GitHub stars in first month, attracted 3 senior engineer applications",
+      "tags": ["business-strategy", "innovation", "community", "long-term-thinking"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Selected aggressive pricing strategy at 3x competitor rates",
+      "timestamp": "2025-10-10T15:45:00Z",
+      "decision_logic": "Premium positioning: Higher price signals quality, attracts serious customers, enables better support. Volume play is race to bottom.",
+      "outcome": "Lower volume but 4x higher customer lifetime value, sustainable margins",
+      "tags": ["business-strategy", "pricing", "strategic-positioning"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Implemented real-time anomaly detection using Isolation Forest over rule-based system",
+      "timestamp": "2025-10-05T10:00:00Z",
+      "decision_logic": "Technical depth preference: ML-based detection catches novel patterns rule-based misses. Worth complexity for 25% better detection rate.",
+      "outcome": "Caught 3 critical anomalies rule-based would have missed",
+      "tags": ["ai", "ml", "technical-depth", "innovation"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Chose to rebuild authentication system from scratch instead of using Auth0",
+      "timestamp": "2025-09-28T14:30:00Z",
+      "decision_logic": "Control vs. convenience trade-off: Custom auth eliminates vendor lock-in, enables unique security features. 3-week investment for long-term flexibility.",
+      "outcome": "Zero vendor dependency, implemented novel MFA approach",
+      "tags": ["security", "control", "full-stack", "architecture"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Delayed product launch by 2 weeks to implement comprehensive testing suite",
+      "timestamp": "2025-09-20T09:15:00Z",
+      "decision_logic": "Quality over speed: Technical debt from rushed launch costs 10x more to fix. Comprehensive tests enable faster future iteration.",
+      "outcome": "Zero critical bugs in first month, faster feature development post-launch",
+      "tags": ["quality", "testing", "long-term-thinking", "systems-thinking"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Adopted TypeScript for frontend despite team's JavaScript expertise",
+      "timestamp": "2025-09-12T16:00:00Z",
+      "decision_logic": "Systematic analysis: Type safety catches 30% of bugs at compile time. Short-term slowdown (2 weeks) pays off in fewer runtime errors.",
+      "outcome": "Bug reports decreased 45%, refactoring became significantly safer",
+      "tags": ["full-stack", "technical-depth", "quality", "team-development"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Selected PostgreSQL over MongoDB for new analytics platform",
+      "timestamp": "2025-09-05T11:30:00Z",
+      "decision_logic": "Data integrity priority: Relational model better suits financial data. ACID compliance non-negotiable for trading analytics.",
+      "outcome": "Zero data consistency issues, complex queries 50% faster than NoSQL approach",
+      "tags": ["architecture", "database", "trading", "data-driven"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Decided to hire senior engineer at 40% premium over budget",
+      "timestamp": "2025-08-28T10:00:00Z",
+      "decision_logic": "10x engineer value: Senior hire reduces supervision needs, mentors team, ships faster. NPV positive within 6 months.",
+      "outcome": "Team velocity doubled, code quality significantly improved",
+      "tags": ["business-strategy", "team-development", "investment", "long-term-thinking"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Implemented WebSocket real-time updates instead of polling",
+      "timestamp": "2025-08-15T14:45:00Z",
+      "decision_logic": "User experience optimization: Real-time feels magical, polling feels sluggish. Technical complexity worth UX improvement.",
+      "outcome": "User satisfaction scores increased 35%, server load reduced 60%",
+      "tags": ["full-stack", "optimization", "user-focus", "technical-depth"]
+    },
+    {
+      "event_type": "decision",
+      "description": "Chose to maintain backward compatibility at cost of cleaner API design",
+      "timestamp": "2025-08-01T09:30:00Z",
+      "decision_logic": "Pragmatic compromise: Breaking changes cost users migration time. Backward compatibility enables gradual adoption. Can deprecate over 12 months.",
+      "outcome": "Zero customer churn during upgrade, smooth transition over 6 months",
+      "tags": ["api-design", "pragmatism", "user-focus", "long-term-thinking"]
+    },
+    {
+      "event_type": "project",
+      "description": "Completed full-stack cognitive profiling dashboard with React + FastAPI",
+      "timestamp": "2025-11-29T09:00:00Z",
+      "decision_logic": null,
+      "outcome": "Production-ready system with ML-based pattern detection, deployed on GitHub",
+      "tags": ["full-stack", "ai", "react", "fastapi", "ml"]
+    },
+    {
+      "event_type": "project",
+      "description": "Built custom trading signal generator using LSTM neural networks",
+      "timestamp": "2025-11-20T16:30:00Z",
+      "decision_logic": null,
+      "outcome": "87% accuracy on out-of-sample data, integrated into live trading system",
+      "tags": ["ai", "trading", "lstm", "deep-learning", "fintech"]
+    },
+    {
+      "event_type": "project",
+      "description": "Developed automated 3D model optimization pipeline using Meshy API",
+      "timestamp": "2025-11-10T11:00:00Z",
+      "decision_logic": null,
+      "outcome": "Reduced model processing time by 70%, handles 500+ models daily",
+      "tags": ["3d-modeling", "automation", "api-integration", "optimization"]
+    },
+    {
+      "event_type": "project",
+      "description": "Created real-time market sentiment analyzer using NLP and social media data",
+      "timestamp": "2025-11-05T14:15:00Z",
+      "decision_logic": null,
+      "outcome": "Processes 10,000 posts/minute, sentiment correlation with price moves: 0.72",
+      "tags": ["ai", "nlp", "trading", "social-media", "data-pipeline"]
+    },
+    {
+      "event_type": "project",
+      "description": "Built self-hosted LLM inference server using Ollama with custom fine-tuning",
+      "timestamp": "2025-10-28T10:30:00Z",
+      "decision_logic": null,
+      "outcome": "Zero cloud dependency, 50ms latency, fine-tuned for domain-specific queries",
+      "tags": ["ai", "llm", "self-hosted", "infrastructure", "control"]
+    },
+    {
+      "event_type": "project",
+      "description": "Developed psychological profiling algorithm based on HEXACO model",
+      "timestamp": "2025-10-22T15:00:00Z",
+      "decision_logic": null,
+      "outcome": "85% correlation with professional assessments, used for team compatibility analysis",
+      "tags": ["psychology", "ai", "assessment", "hr-tech", "behavioral-analysis"]
+    },
+    {
+      "event_type": "project",
+      "description": "Created enterprise API gateway with rate limiting and analytics",
+      "timestamp": "2025-10-15T09:45:00Z",
+      "decision_logic": null,
+      "outcome": "Handles 100k requests/second, 99.99% uptime over 3 months",
+      "tags": ["full-stack", "api", "infrastructure", "scalability", "enterprise"]
+    },
+    {
+      "event_type": "project",
+      "description": "Built automated portfolio rebalancing system with risk management",
+      "timestamp": "2025-10-08T14:00:00Z",
+      "decision_logic": null,
+      "outcome": "Manages $2M AUM, maintains target allocation within 0.5% tolerance",
+      "tags": ["trading", "automation", "risk-management", "fintech", "algorithmic"]
+    },
+    {
+      "event_type": "project",
+      "description": "Developed custom embedding model for semantic code search",
+      "timestamp": "2025-09-30T11:30:00Z",
+      "decision_logic": null,
+      "outcome": "93% recall on code similarity tasks, integrated into internal tooling",
+      "tags": ["ai", "ml", "code-search", "embeddings", "developer-tools"]
+    },
+    {
+      "event_type": "project",
+      "description": "Created real-time collaborative whiteboard with WebRTC and CRDT",
+      "timestamp": "2025-09-22T16:00:00Z",
+      "decision_logic": null,
+      "outcome": "Supports 50 concurrent users, <100ms sync latency, zero conflicts",
+      "tags": ["full-stack", "real-time", "collaboration", "webrtc", "crdt"]
+    },
+    {
+      "event_type": "project",
+      "description": "Built A/B testing platform with statistical significance calculator",
+      "timestamp": "2025-09-15T10:15:00Z",
+      "decision_logic": null,
+      "outcome": "Running 15 experiments simultaneously, automated significance reporting",
+      "tags": ["full-stack", "analytics", "statistics", "experimentation", "data-driven"]
+    },
+    {
+      "event_type": "project",
+      "description": "Developed custom CI/CD pipeline with automated security scanning",
+      "timestamp": "2025-09-08T14:30:00Z",
+      "decision_logic": null,
+      "outcome": "Deployment time reduced from 45min to 8min, caught 12 vulnerabilities",
+      "tags": ["devops", "automation", "security", "ci-cd", "infrastructure"]
+    },
+    {
+      "event_type": "project",
+      "description": "Created electromagnetic field visualization tool for research",
+      "timestamp": "2025-08-25T11:00:00Z",
+      "decision_logic": null,
+      "outcome": "Renders complex field interactions in real-time, used in 3 research papers",
+      "tags": ["3d-modeling", "visualization", "research", "physics", "electromagnetic"]
+    },
+    {
+      "event_type": "project",
+      "description": "Built customer behavior prediction model using gradient boosting",
+      "timestamp": "2025-08-18T15:45:00Z",
+      "decision_logic": null,
+      "outcome": "91% accuracy on churn prediction, integrated into CRM workflow",
+      "tags": ["ai", "ml", "business-strategy", "customer-analytics", "prediction"]
+    },
+    {
+      "event_type": "project",
+      "description": "Developed multi-agent trading simulation environment",
+      "timestamp": "2025-08-05T09:30:00Z",
+      "decision_logic": null,
+      "outcome": "Simulates 1000 agents with realistic market dynamics, used for strategy validation",
+      "tags": ["trading", "simulation", "ai", "multi-agent", "research"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Technical debate with colleague about microservices vs. monolith architecture",
+      "timestamp": "2025-10-22T16:45:00Z",
+      "decision_logic": "Defended monolith-first approach with data: premature microservices increase complexity by 300% for <100k users",
+      "outcome": "Colleague agreed after seeing performance metrics, team adopted monolith strategy",
+      "tags": ["technical-debate", "systems-thinking", "data-driven", "leadership"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Mentoring session with junior developer on system design principles",
+      "timestamp": "2025-10-15T14:00:00Z",
+      "decision_logic": "Knowledge transfer investment: 2 hours now saves 20 hours of code review later",
+      "outcome": "Junior's next PR required zero architectural revisions",
+      "tags": ["mentoring", "team-development", "systems-thinking", "investment"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Resolved conflict between product and engineering on feature scope",
+      "timestamp": "2025-10-08T11:30:00Z",
+      "decision_logic": "Mediation through data: Presented user analytics showing 80/20 split on feature value. Proposed MVP scope.",
+      "outcome": "Both teams aligned on reduced scope, shipped 3 weeks faster",
+      "tags": ["conflict-resolution", "data-driven", "leadership", "pragmatism"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Collaborative problem-solving session on database performance issues",
+      "timestamp": "2025-09-28T15:30:00Z",
+      "decision_logic": "Systematic debugging: Started with metrics, formed hypotheses, tested incrementally",
+      "outcome": "Identified N+1 query issue, 10x performance improvement after fix",
+      "tags": ["collaboration", "debugging", "systems-thinking", "technical-depth"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Feedback exchange with peer on code review practices",
+      "timestamp": "2025-09-20T10:45:00Z",
+      "decision_logic": "Radical honesty: Addressed pattern of superficial reviews directly, proposed specific improvements",
+      "outcome": "Peer acknowledged issue, review quality improved measurably",
+      "tags": ["feedback", "honesty", "quality", "team-development"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Strategic planning session with stakeholders on product roadmap",
+      "timestamp": "2025-09-12T09:00:00Z",
+      "decision_logic": "Framework-driven: Used RICE scoring to prioritize objectively, presented trade-offs transparently",
+      "outcome": "Aligned on Q4 priorities, reduced scope creep by 60%",
+      "tags": ["strategic-planning", "stakeholder-management", "data-driven", "leadership"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Technical interview debrief - challenged consensus on candidate rating",
+      "timestamp": "2025-09-05T16:00:00Z",
+      "decision_logic": "Evidence-based hiring: Presented specific examples from interview that others missed. Advocated for depth over polish.",
+      "outcome": "Team reconsidered, hired candidate who became top performer",
+      "tags": ["hiring", "evidence-based", "contrarian", "leadership"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Cross-team collaboration on shared infrastructure migration",
+      "timestamp": "2025-08-28T14:15:00Z",
+      "decision_logic": "Systematic coordination: Created shared timeline, defined clear ownership, established communication cadence",
+      "outcome": "Zero-downtime migration, completed 1 week ahead of schedule",
+      "tags": ["collaboration", "infrastructure", "project-management", "systems-thinking"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Difficult conversation with underperforming team member",
+      "timestamp": "2025-08-15T11:00:00Z",
+      "decision_logic": "Direct communication: Addressed performance gap explicitly, provided specific examples, offered support plan",
+      "outcome": "Team member appreciated clarity, performance improved within 4 weeks",
+      "tags": ["leadership", "honesty", "difficult-conversations", "team-development"]
+    },
+    {
+      "event_type": "interaction",
+      "description": "Knowledge sharing presentation on ML best practices to engineering team",
+      "timestamp": "2025-08-01T15:00:00Z",
+      "decision_logic": "Leverage multiplication: 2-hour investment impacts 15 engineers, prevents common mistakes",
+      "outcome": "3 teams adopted recommended practices, reduced ML debugging time by 40%",
+      "tags": ["knowledge-sharing", "mentoring", "ai", "team-development"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Direct feedback to stakeholder: 'This timeline is unrealistic. Here's what's actually achievable and why.'",
+      "timestamp": "2025-11-10T10:30:00Z",
+      "decision_logic": "Radical honesty over political comfort: Setting realistic expectations prevents larger failures later",
+      "outcome": "Stakeholder appreciated transparency, adjusted expectations accordingly",
+      "tags": ["directness", "honesty", "stakeholder-management", "pragmatism"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Probing question in strategy meeting: 'What evidence do we have that users actually want this?'",
+      "timestamp": "2025-11-02T14:00:00Z",
+      "decision_logic": "Depth-seeking: Challenged assumption-based planning, demanded data",
+      "outcome": "Team realized no user validation existed, pivoted to research-first approach",
+      "tags": ["depth-seeking", "evidence-based", "provocation", "strategic-thinking"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Technical explanation of complex ML concept to non-technical stakeholders",
+      "timestamp": "2025-10-25T11:15:00Z",
+      "decision_logic": "Communication calibration: Adjusted complexity to audience, used analogies, focused on business impact",
+      "outcome": "Stakeholders understood trade-offs, made informed decision on ML investment",
+      "tags": ["technical-communication", "stakeholder-management", "abstraction", "clarity"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Pushed back on vague requirements: 'I need specific acceptance criteria before starting implementation.'",
+      "timestamp": "2025-10-18T09:45:00Z",
+      "decision_logic": "Substance preference: Vague requirements lead to wasted effort. Demanding clarity upfront saves time.",
+      "outcome": "Product manager provided detailed specs, implementation proceeded smoothly",
+      "tags": ["directness", "substance-preference", "efficiency", "quality"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Responded to manipulative negotiation tactic with transparent counter: 'I recognize this anchoring technique. Here's my actual position.'",
+      "timestamp": "2025-10-10T15:30:00Z",
+      "decision_logic": "Manipulation resistance: Identifying and naming tactics defuses them. Maintaining transparency builds trust.",
+      "outcome": "Negotiation reset to honest terms, reached mutually beneficial agreement",
+      "tags": ["manipulation-resistance", "negotiation", "transparency", "psychology"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Email declining meeting request: 'This could be resolved async. Here's my input. Let me know if synchronous discussion is truly needed.'",
+      "timestamp": "2025-10-02T08:30:00Z",
+      "decision_logic": "Time optimization: Meetings have high hidden costs. Default to async, sync only when necessary.",
+      "outcome": "Issue resolved via email in 10 minutes vs. 1-hour meeting",
+      "tags": ["efficiency", "optimization", "async-communication", "directness"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Challenged CEO's strategic assumption in all-hands: 'The data suggests opposite conclusion. Have we considered...'",
+      "timestamp": "2025-09-25T10:00:00Z",
+      "decision_logic": "Truth over hierarchy: Organizational health requires challenging authority when warranted. Presented respectfully but firmly.",
+      "outcome": "CEO appreciated the pushback, requested follow-up analysis that influenced strategy",
+      "tags": ["provocation-tolerance", "evidence-based", "leadership", "honesty"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Deep-dive discussion on philosophical implications of AI alignment in casual conversation",
+      "timestamp": "2025-09-18T12:30:00Z",
+      "decision_logic": "Depth-seeking: Engaging with complex ideas in all contexts. Avoiding small talk when meaningful discussion possible.",
+      "outcome": "Discovered shared interest, led to collaborative research project",
+      "tags": ["depth-seeking", "ai", "philosophy", "intellectual-curiosity"]
+    },
+    {
+      "event_type": "communication",
+      "description": "Slack message correcting technical misinformation in public channel with supporting documentation",
+      "timestamp": "2025-09-10T14:45:00Z",
+      "decision_logic": "Truth prioritization: Misinformation causes downstream problems. Correction with evidence is respectful correction.",
+      "outcome": "Original poster thanked for correction, updated understanding propagated",
+      "tags": ["honesty", "technical-accuracy", "documentation", "knowledge-sharing"]
+    },
+    {
+      "event_type": "communication",
+      "description": "One-on-one feedback: 'Your work is excellent but your communication creates unnecessary friction. Here's specific feedback.'",
+      "timestamp": "2025-08-22T16:00:00Z",
+      "decision_logic": "Balanced honesty: Acknowledge strengths while addressing development areas. Specific examples prevent defensiveness.",
+      "outcome": "Person adjusted communication style, team dynamics improved",
+      "tags": ["feedback", "directness", "team-development", "emotional-intelligence"]
+    }
+  ]
+}

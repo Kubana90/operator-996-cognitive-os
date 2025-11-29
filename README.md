@@ -219,6 +219,54 @@ npm start
 
 ---
 
+## 🎮 Demo Mode (Quick Test)
+
+Want to see the system in action immediately?
+
+### Option 1: Auto-Import Sample Data (Recommended)
+
+```bash
+# Start the system
+docker-compose up -d
+
+# Import 50+ realistic behavioral events
+cd operator-996-os/backend
+python import_sample_data.py
+
+# Open dashboard
+open http://localhost:3000
+```
+
+### Option 2: Frontend Demo Button
+
+1. Start the system: `docker-compose up -d`
+2. Open http://localhost:3000
+3. Go to **Settings** tab
+4. Click **🎮 Load Demo Data (50+ Events)**
+5. Dashboard will auto-refresh with populated data
+
+### Option 3: Manual API Import
+
+```bash
+curl -X POST http://localhost:8000/import/sample-data
+```
+
+**What you'll see:**
+- ✅ Populated dashboard with events timeline
+- ✅ Detected patterns (decision frameworks, domain clusters)
+- ✅ Anomaly reports (contradictions, perfectionism signals)
+- ✅ Semantic search results
+- ✅ Scenario simulation with learned behavior
+
+**Sample Events Include:**
+- Strategic AI/ML project decisions
+- Full-stack development deliverables
+- Trading algorithm implementations
+- Technical debates and collaborations
+- Direct communication patterns
+
+---
+
 ## 📦 Installation
 
 ### File Structure

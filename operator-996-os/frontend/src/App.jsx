@@ -431,6 +431,45 @@ const CognitiveOS = () => {
         <small>Change and refresh page if connecting to remote backend</small>
       </div>
 
+      <div className="demo-section">
+        <h3>🎮 Demo Mode</h3>
+        <p>Load 50+ realistic behavioral events to see the system in action.</p>
+        <button 
+          onClick={async () => {
+            try {
+              setLoading(true);
+              const response = await fetch(`${apiBase}/import/sample-data`, {method: 'POST'});
+              if (response.ok) {
+                const data = await response.json();
+                alert(`✅ Sample data imported! ${data.imported} events loaded.\nRefresh to see the dashboard populated.`);
+                window.location.reload();
+              } else {
+                alert('❌ Failed to import sample data. Check if backend is running.');
+              }
+            } catch (err) {
+              alert('❌ Error importing sample data: ' + err.message);
+            } finally {
+              setLoading(false);
+            }
+          }}
+          disabled={loading}
+          style={{
+            padding: '12px 24px',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            opacity: loading ? 0.7 : 1,
+            marginTop: '10px'
+          }}
+        >
+          {loading ? '⏳ Loading...' : '🎮 Load Demo Data (50+ Events)'}
+        </button>
+      </div>
+
       <div className="info-box">
         <h3>ℹ️ System Information</h3>
         <p><strong>Version:</strong> 1.0.0</p>

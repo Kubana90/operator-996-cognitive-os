@@ -491,6 +491,32 @@ async def import_events(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.post("/import/sample-data")
+async def import_sample_data():
+    """Import pre-built sample events for demo/testing"""
+    from pathlib import Path
+    
+    sample_file = Path(__file__).parent / "sample_events.json"
+    
+    if not sample_file.exists():
+        raise HTTPException(404, "Sample data file not found")
+    
+    with open(sample_file, 'r') as f:
+        data = json.load(f)
+    
+    imported_count = 0
+    for event_data in data.get('behavioral_events', []):
+        event = BehavioralEvent(**event_data)
+        os_engine.add_behavioral_event(event)
+        imported_count += 1
+    
+    return {
+        "status": "success",
+        "imported": imported_count,
+        "message": "Sample data loaded. Run pattern detection to see insights.",
+        "timestamp": datetime.now().isoformat()
+    }
+
 @app.get("/export/full")
 async def export_full():
     """Export complete profile snapshot"""
