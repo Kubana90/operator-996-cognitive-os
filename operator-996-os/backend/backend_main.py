@@ -3,7 +3,7 @@ Operator-996 Cognitive OS Backend
 FastAPI + Pattern Analysis + Semantic Search + Anomaly Detection
 """
 
-from fastapi import FastAPI, UploadFile, File, WebSocket, HTTPException
+from fastapi import FastAPI, UploadFile, File, WebSocket, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -13,12 +13,20 @@ import numpy as np
 from datetime import datetime
 import asyncio
 import logging
+import os
+import uuid as uuid_module
 
 # ML & Analysis
 from sklearn.decomposition import PCA
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
 import hashlib
+
+# Database imports
+from database import (
+    DATABASE_URL, engine, SessionLocal, Base, init_db, check_db_connection,
+    get_db, Profile, BehavioralEventDB, PatternDB, AnomalyDB
+)
 
 # Semantic Search (local embeddings or OpenAI)
 try:
@@ -30,6 +38,9 @@ except:
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Operator996")
+
+# Database availability flag
+DB_AVAILABLE = bool(DATABASE_URL)
 
 # ============================================================================
 # DATA MODELS
@@ -78,7 +89,7 @@ class ScenarioSimulation(BaseModel):
 # ============================================================================
 
 class CognitiveOS:
-    def __init__(self):
+    def __init__(self, db_session=None):
         self.profile = {}
         self.behavioral_events = []
         self.patterns = []
@@ -88,6 +99,8 @@ class CognitiveOS:
             "version": "1.0.0",
             "operator": "Operator-996"
         }
+        self.db_session = db_session
+        self.profile_id = None
         
         # Initialize embeddings if available
         if EMBEDDINGS_AVAILABLE:
@@ -98,6 +111,10 @@ class CognitiveOS:
         
         # Load seed profile
         self._init_seed_profile()
+        
+        # Load from database if available
+        if self.db_session:
+            self.load_from_db()
     
     def _init_seed_profile(self):
         """Initialize with known Operator-996 attributes"""
@@ -144,6 +161,130 @@ class CognitiveOS:
             }
         }
         logger.info("✓ Seed profile loaded: Operator-996")
+    
+    def save_to_db(self):
+        """Save current state to database"""
+        if not self.db_session:
+            logger.warning("No database session available for save")
+            return False
+        
+        try:
+            # Get or create profile
+            db_profile = None
+            if self.profile_id:
+                db_profile = self.db_session.query(Profile).filter(
+                    Profile.id == self.profile_id
+                ).first()
+            
+            if not db_profile:
+                db_profile = Profile(
+                    cognitive_data=self.profile.get("cognitive", {}),
+                    behavioral_data=self.profile.get("behavioral", {}),
+                    communication_data=self.profile.get("communication", {}),
+                    shadow_data=self.profile.get("shadow", {}),
+                    domains_data=self.profile.get("domains", {}),
+                )
+                self.db_session.add(db_profile)
+                self.db_session.flush()
+                self.profile_id = db_profile.id
+            else:
+                db_profile.cognitive_data = self.profile.get("cognitive", {})
+                db_profile.behavioral_data = self.profile.get("behavioral", {})
+                db_profile.communication_data = self.profile.get("communication", {})
+                db_profile.shadow_data = self.profile.get("shadow", {})
+                db_profile.domains_data = self.profile.get("domains", {})
+                db_profile.updated_at = datetime.utcnow()
+            
+            self.db_session.commit()
+            logger.info(f"✓ Profile saved to database: {self.profile_id}")
+            return True
+        except Exception as e:
+            self.db_session.rollback()
+            logger.error(f"Failed to save to database: {e}")
+            return False
+    
+    def load_from_db(self):
+        """Load state from database"""
+        if not self.db_session:
+            logger.warning("No database session available for load")
+            return False
+        
+        try:
+            # Load first profile (or most recent)
+            db_profile = self.db_session.query(Profile).order_by(
+                Profile.updated_at.desc()
+            ).first()
+            
+            if db_profile:
+                self.profile_id = db_profile.id
+                self.profile = db_profile.to_dict()
+                
+                # Load events
+                self.behavioral_events = [
+                    event.to_dict() for event in db_profile.events
+                ]
+                
+                # Load patterns
+                self.patterns = [
+                    pattern.to_dict() for pattern in db_profile.patterns
+                ]
+                
+                # Load anomalies
+                self.anomalies = [
+                    anomaly.to_dict() for anomaly in db_profile.anomalies
+                ]
+                
+                logger.info(f"✓ Loaded profile from database: {self.profile_id}")
+                return True
+            else:
+                logger.info("No existing profile in database, using seed profile")
+                return False
+        except Exception as e:
+            logger.error(f"Failed to load from database: {e}")
+            return False
+    
+    def sync_events(self):
+        """Sync behavioral events to database"""
+        if not self.db_session or not self.profile_id:
+            return False
+        
+        try:
+            # Get existing event IDs from database
+            existing_events = self.db_session.query(BehavioralEventDB).filter(
+                BehavioralEventDB.profile_id == self.profile_id
+            ).all()
+            existing_ids = {str(e.id) for e in existing_events}
+            
+            # Add new events
+            for event in self.behavioral_events:
+                event_id = event.get('id', '')
+                if event_id not in existing_ids:
+                    # Parse timestamp
+                    timestamp = event.get('timestamp')
+                    if isinstance(timestamp, str):
+                        try:
+                            timestamp = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+                        except ValueError:
+                            timestamp = datetime.utcnow()
+                    
+                    db_event = BehavioralEventDB(
+                        profile_id=self.profile_id,
+                        event_type=event.get('event_type', ''),
+                        description=event.get('description', ''),
+                        timestamp=timestamp,
+                        decision_logic=event.get('decision_logic'),
+                        outcome=event.get('outcome'),
+                        tags=event.get('tags', []),
+                    )
+                    self.db_session.add(db_event)
+            
+            self.db_session.commit()
+            logger.info("✓ Events synced to database")
+            return True
+        except Exception as e:
+            self.db_session.rollback()
+            logger.error(f"Failed to sync events: {e}")
+            return False
     
     def add_behavioral_event(self, event: BehavioralEvent) -> str:
         """Log a behavioral event with timestamp"""
@@ -387,8 +528,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize Cognitive OS
-os_engine = CognitiveOS()
+# Initialize Cognitive OS (with database session if available)
+def get_os_engine():
+    """Get CognitiveOS instance with database session if available"""
+    if DB_AVAILABLE and SessionLocal:
+        db = SessionLocal()
+        return CognitiveOS(db_session=db)
+    return CognitiveOS()
+
+os_engine = get_os_engine()
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database on startup"""
+    if DB_AVAILABLE:
+        logger.info("Initializing database tables...")
+        success = init_db()
+        if success:
+            logger.info("✓ Database tables initialized")
+            # Reload engine with fresh DB state
+            global os_engine
+            os_engine = get_os_engine()
+        else:
+            logger.warning("⚠️ Failed to initialize database, using in-memory storage")
+
 
 # ============================================================================
 # ENDPOINTS
@@ -396,12 +560,29 @@ os_engine = CognitiveOS()
 
 @app.get("/health")
 async def health():
-    """Health check"""
+    """Health check with database status"""
+    db_status = "not_configured"
+    if DB_AVAILABLE:
+        db_status = "connected" if check_db_connection() else "disconnected"
+    
     return {
         "status": "online",
         "operator": "Operator-996",
-        "timestamp": datetime.now().isoformat()
+        "timestamp": datetime.now().isoformat(),
+        "database": db_status
     }
+
+
+@app.post("/admin/init-db")
+async def initialize_database():
+    """Create all database tables"""
+    if not DB_AVAILABLE:
+        return {"status": "skipped", "message": "Database not configured"}
+    
+    success = init_db()
+    if success:
+        return {"status": "Database initialized"}
+    return {"status": "error", "message": "Failed to initialize database"}
 
 @app.get("/profile")
 async def get_profile():
