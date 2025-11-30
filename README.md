@@ -504,6 +504,23 @@ OPENAI_API_KEY=sk-...
 PERPLEXITY_API_KEY=ppl-...
 ```
 
+### Quick Setup
+
+1. Copy the example environment file:
+   ```bash
+   cp operator-996-os/.env.example operator-996-os/.env
+   ```
+
+2. Edit `.env` with your actual values:
+   ```bash
+   nano operator-996-os/.env
+   ```
+
+3. Start the system:
+   ```bash
+   docker-compose up -d
+   ```
+
 ### Customizing Profile Seed
 
 Edit `backend_main.py`, function `_init_seed_profile()`:
