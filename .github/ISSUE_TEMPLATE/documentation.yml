@@ -1,0 +1,27 @@
+name: 📚 Documentation
+description: Report missing or incorrect documentation
+title: "[DOCS]: "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: Documentation Issue
+      description: What documentation is missing, unclear, or incorrect?
+    validations:
+      required: true
+  
+  - type: textarea
+    id: location
+    attributes:
+      label: Location
+      description: Where is the documentation (or where should it be)?
+      placeholder: README.md, API docs, code comments, etc.
+    validations:
+      required: true
+  
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Improvement
+      description: How should the documentation be improved?
